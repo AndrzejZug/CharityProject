@@ -30,9 +30,8 @@ public class HomeController {
         return donationRepository.count();
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/start")
     public String homeAction(Model model){
-//        model.addAttribute("institutions", getInstitutions());
         model.addAttribute("quantity", donationRepository.countQuantity());
 
         return "index";
