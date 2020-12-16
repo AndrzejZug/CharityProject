@@ -8,11 +8,11 @@
         </ul>
 
         <ul>
-            <li><a href="/start" class="btn btn--without-border active">Start</a></li>
-<%--            <li><a href='<c:url value="/start" />#steps' class="btn btn--without-border">O co chodzi?</a></li>--%>
-            <li><a href='/start#steps' class="btn btn--without-border">O co chodzi?</a></li>
-            <li><a href='<c:url value="/start" />#about-us' class="btn btn--without-border">O nas</a></li>
+            <li><a href='<c:url value="/start" />' class="btn btn--without-border active">Start</a></li>
+            <li><a href='<c:url value="/start#steps" />' class="btn btn--without-border">O co chodzi?</a></li>
+            <li><a href='<c:url value="/start#about-us" />' class="btn btn--without-border">O nas</a></li>
             <li><a href='<c:url value="/start#help" />' class="btn btn--without-border">Fundacje i organizacje</a></li>
+            <li><a href='<c:url value="/form" />' class="btn btn--without-border">Przekaż dary</a></li>
             <li><a href='<c:url value="/start#contact" />' class="btn btn--without-border">Kontakt</a></li>
         </ul>
     </nav>

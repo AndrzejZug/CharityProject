@@ -16,7 +16,7 @@
 <body>
 <%@include file="header.jsp" %>
 
-<section class="stats">
+<section class="stats" id="stats">
     <div class="container container--85">
         <div class="stats--item">
             <em>${quantity}</em>
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <a href="/form" class="btn btn--large">Załóż konto</a>
+    <a href="${pageContext.request.contextPath}/form" class="btn btn--large">Załóż konto</a>
 </section>
 
 <section class="about-us" id="about-us">
