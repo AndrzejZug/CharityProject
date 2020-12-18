@@ -3,11 +3,15 @@ package pl.coderslab.charity.donation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.category.CategoryRepository;
 import pl.coderslab.charity.institution.InstitutionRepository;
+
+import javax.validation.Valid;
 
 @Controller
 public class DonationController {
@@ -22,18 +26,22 @@ public class DonationController {
     }
 
     @GetMapping("/form")
-public String formAction(Model model){
+    public String formAction(Model model){
         model.addAttribute("donation", new Donation());
         model.addAttribute("institutions", institutionRepository.findAll());
         model.addAttribute("categories", categoryRepository.findAll());
         return "form";
     }
     @PostMapping("/form")
-    public String saveDonation(Donation donation, BindingResult result){
+    public String saveDonation(@Valid Donation donation, BindingResult result){
         if (result.hasErrors()) {
-            return "/form";
+            return "redirect:/form";
         }
         donationRepository.save(donation);
-        return "redirect:/start";
+        return "redirect:/form-confirmation";
+    }
+    @RequestMapping("/form-confirmation")
+    public String formConfirmation(){
+        return "/form-confirmation";
     }
 }

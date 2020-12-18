@@ -75,6 +75,7 @@
                     <label>
                         Liczba 60l worków:
                         <input type="number" path="quantity" name="quantity" step="1" min="1" />
+                        <form:errors path="quantity"></form:errors>
                     </label>
                 </div>
 
@@ -97,7 +98,7 @@
                         <span class="description">
                   <div class="title">${curInstitution.name}</div>
                   <div class="subtitle">
-                    ${institution.description}
+                    ${curInstitution.description}
                   </div>
                 </span>
                     </label>
@@ -207,6 +208,13 @@
                     </div>
                 </div>
 
+                <div class="info-container">
+                    <div id="error-message" class="alert alert-danger d-none">
+                    </div>
+                    <div id="success-message" class="alert alert-success d-none">
+                    </div>
+                </div>
+
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
                     <button type="submit" class="btn">Potwierdzam</button>
@@ -215,21 +223,6 @@
         </form:form>
     </div>
 </section>
-
-
-<%--<form:form method="POST" modelAttribute="donation">--%>
-<%--    Category<form:checkboxes path="categories" items="${categories}" itemLabel="name" itemValue="id"/>--%>
-<%--    quantity<form:input path="quantity"/><br>--%>
-<%--    street<form:input path="street"/><br>--%>
-<%--    city<form:input path="city"/><br>--%>
-<%--    zipCode<form:input path="zipCode"/><br>--%>
-<%--    pickUpTime<form:input type="time" path="pickUpTime"/><br>--%>
-<%--    pickUpDate<form:input type="date" path="pickUpDate"/><br>--%>
-<%--    pickUpComment<form:input path="pickUpComment"/><br>--%>
-<%--    institutions<form:select path="institution.id" items="${institutions}" itemLabel="name" itemValue="id"/><br>--%>
-<%--    <input type="submit" value="Wyślij">--%>
-<%--</form:form>--%>
-
 <%@include file="footer.jsp" %>
 </body>
 </html>
