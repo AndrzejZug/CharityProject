@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -16,11 +17,13 @@ public class UserController {
 
     private final UserService userService;
     private final RoleRepository roleRepository;
+    private final EmailService emailService;
 
 
-    public UserController(UserService userService, RoleRepository roleRepository) {
+    public UserController(UserService userService, RoleRepository roleRepository, EmailService emailService) {
         this.userService = userService;
         this.roleRepository = roleRepository;
+        this.emailService = emailService;
     }
 
     @ModelAttribute("roles")
@@ -46,6 +49,20 @@ public class UserController {
         return "/admin/all-users";
     }
 
+    @GetMapping("/email")
+    @ResponseBody
+    public String sendEmail() {
+        emailService.sendSimpleMessage("ajzugaj@gmail.com", "Test email", "Test wysyłki email");
+        return "email wysłano";
+    }
+    @GetMapping("/email2")
+    @ResponseBody
+    public String sendEmailWithAttachement() throws MessagingException {
+        emailService.sendMessageWithAttachment("ajzugaj@gmail.com", "Test email", "Test wysyłki email z załącznikiem", "resources/images/about-us.jpg");
+        return "email wysłano";
+    }
+
+
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("carUser", new CarUser());
@@ -63,6 +80,9 @@ public class UserController {
 
         if(userByEmail==null) {
             userService.saveUser(carUser);
+            String emailTo = carUser.getEmail();
+            String emailText = carUser.getFirstName() + " " + carUser.getLastName();
+            emailService.sendSimpleMessage(emailTo, "Potwierdzenie rejestracji Charity", emailText);
             return "redirect:/";
         }else {
             String error = "This email is already taken";
