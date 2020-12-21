@@ -46,18 +46,18 @@ public class UserController {
         return "/admin/all-users";
     }
 
-    @GetMapping("/admin/add-user")
+    @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("carUser", new CarUser());
-        return "/admin/add-user";
+        return "/register";
     }
-        @PostMapping("/admin/add-user")
+        @PostMapping("/register")
     public String registerUser(@Valid CarUser carUser, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             System.out.println("error: " + result);
             System.out.println(carUser);
-            return "/admin/add-user";
+            return "/register";
         }
         CarUser userByEmail = userService.findByEmail(carUser.getEmail());
 
@@ -67,7 +67,7 @@ public class UserController {
         }else {
             String error = "This email is already taken";
             model.addAttribute("message", error);
-            return "/admin/add-user";
+            return "/register";
         }
     }
 

@@ -9,6 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -19,7 +20,67 @@
     <link rel="stylesheet" href="<c:url value="resources/css/style.css"/>"/>
 </head>
 <body>
-<%@include file="header.jsp" %>
+<header class="header--form-page">
+    <sec:authorize access="isAuthenticated()">
+    <nav class="container container--70">
+        <ul class="nav--actions">
+            <li class="logged-user">
+                Witaj <sec:authentication property="principal.username"/>
+                <ul class="dropdown">
+                    <li><a href="#">Profil</a></li>
+                    <li><a href="#">Moje zbiórki</a></li>
+                    <li><a href='<c:url value="/logout"/>'>Wyloguj</a></li>
+                </ul>
+            </li>
+        </ul>
+        </sec:authorize>
+
+        <sec:authorize access="isAnonymous()">
+        <nav class="container container--70">
+            <ul class="nav--actions">
+                <li><a href='<c:url value="/login" />' class="btn btn--small btn--without-border">Zaloguj</a></li>
+                <li><a href='<c:url value="/register" />' class="btn btn--small btn--highlighted">Załóż konto</a></li>
+            </ul>
+            </sec:authorize>
+            <ul>
+                <li><a href='<c:url value="/start" />' class="btn btn--without-border active">Start</a></li>
+                <li><a href='<c:url value="/start#steps" />' class="btn btn--without-border">O co chodzi?</a></li>
+                <li><a href='<c:url value="/start#about-us" />' class="btn btn--without-border">O nas</a></li>
+                <li><a href='<c:url value="/start#help" />' class="btn btn--without-border">Fundacje i organizacje</a>
+                </li>
+        <sec:authorize access="isAnonymous()">
+                <li><a href='<c:url value="/login" />' class="btn btn--without-border">Przekaż dary</a></li>
+        </sec:authorize>
+                <li><a href='<c:url value="/start#contact" />' class="btn btn--without-border">Kontakt</a></li>
+            </ul>
+        </nav>
+<div class="slogan container container--90">
+    <div class="slogan--item">
+        <h1>
+            Oddaj rzeczy, których już nie chcesz<br />
+            <span class="uppercase">potrzebującym</span>
+        </h1>
+
+        <div class="slogan--steps">
+            <div class="slogan--steps-title">Wystarczą 4 proste kroki:</div>
+            <ul class="slogan--steps-boxes">
+                <li>
+                    <div><em>1</em><span>Wybierz rzeczy</span></div>
+                </li>
+                <li>
+                    <div><em>2</em><span>Spakuj je w worki</span></div>
+                </li>
+                <li>
+                    <div><em>3</em><span>Wybierz fundację</span></div>
+                </li>
+                <li>
+                    <div><em>4</em><span>Zamów kuriera</span></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</header>
 <section class="form--steps">
     <div class="form--steps-instructions">
         <div class="form--steps-container">
@@ -218,6 +279,7 @@
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
                     <button type="submit" class="btn">Potwierdzam</button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </div>
             </div>
         </form:form>

@@ -26,7 +26,7 @@ public class CarUser {
     @Min(0)
     @Max(1)
     private int enabled;
-    @NotEmpty
+//    @NotEmpty
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
 }
